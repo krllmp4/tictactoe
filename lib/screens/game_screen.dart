@@ -6,6 +6,8 @@ import 'package:mp_tictactoe/views/tictactoe_board.dart';
 import 'package:mp_tictactoe/views/waiting_lobby.dart';
 import 'package:provider/provider.dart';
 
+import '../utils/colors.dart';
+
 class GameScreen extends StatefulWidget {
   static String routeName = '/game';
   const GameScreen({Key? key}) : super(key: key);
@@ -31,11 +33,27 @@ class _GameScreenState extends State<GameScreen> {
     RoomDataProvider roomDataProvider = Provider.of<RoomDataProvider>(context);
 
     return Scaffold(
+      appBar: AppBar(
+        leading: const BackButton(
+          //onPressed: , вернуться в главное меню и сообщить на сервер о выходе типа
+          color: gradient3,
+        ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                //вызываем сокет метод на переигровку типа
+              },
+              icon: const Icon(Icons.restart_alt_rounded)),
+        ],
+        backgroundColor: backgroundColor,
+        elevation: 0,
+      ),
       body: roomDataProvider.roomData['isJoin']
           ? const WaitingLobby()
           : SafeArea(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const Scoreboard(),
                   const TicTacToeBoard(),

@@ -1,4 +1,4 @@
-// importing modules
+// Импорт модулей
 const express = require("express");
 const http = require("http");
 const mongoose = require("mongoose");
@@ -9,18 +9,18 @@ var server = http.createServer(app);
 const Room = require("./models/room");
 var io = require("socket.io")(server);
 
-// middle ware
+// Middleware
 app.use(express.json());
 
-const DB =
-  "mongodb+srv://rivaan:test123@cluster0.rmhtu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const DB = "mongodb+srv://krll:kir010404@krllcluster.knfsx5v.mongodb.net/?retryWrites=true&w=majority";
 
 io.on("connection", (socket) => {
   console.log("connected!");
+
   socket.on("createRoom", async ({ nickname }) => {
     console.log(nickname);
     try {
-      // room is created
+      // Создание комнаты
       let room = new Room();
       let player = {
         socketID: socket.id,
@@ -34,8 +34,6 @@ io.on("connection", (socket) => {
       const roomId = room._id.toString();
 
       socket.join(roomId);
-      // io -> send data to everyone
-      // socket -> sending data to yourself
       io.to(roomId).emit("createRoomSuccess", room);
     } catch (e) {
       console.log(e);
@@ -78,7 +76,7 @@ io.on("connection", (socket) => {
     try {
       let room = await Room.findById(roomId);
 
-      let choice = room.turn.playerType; // x or o
+      let choice = room.turn.playerType; // X or O
       if (room.turnIndex == 0) {
         room.turn = room.players[1];
         room.turnIndex = 1;
@@ -99,6 +97,9 @@ io.on("connection", (socket) => {
 
   socket.on("winner", async ({ winnerSocketId, roomId }) => {
     try {
+      if (socket.id != winnerSocketId) {
+        return;
+      }
       let room = await Room.findById(roomId);
       let player = room.players.find(
         (playerr) => playerr.socketID == winnerSocketId
@@ -115,8 +116,34 @@ io.on("connection", (socket) => {
       console.log(e);
     }
   });
+
+  socket.on("revenge", async ({ roomId }) => {
+    try {
+      console.log('revenge');
+      let room = await Room.findById(roomId);
+      room.isJoin = true;
+      room.players.forEach((player) => {
+        player.points = 0;
+      });
+      room = await room.save();
+
+      io.to(roomId).emit("revenged", room);
+    } catch (e) {
+      console.log(e);
+    }
+  });
+
+  socket.on("surrender", async ({ roomId }) => {
+    try {
+      let room = await Room.findById(roomId);
+      io.to(roomId).emit("gameSurrendered", room);
+    } catch (e) {
+      console.log(e);
+    }
+  });
 });
 
+mongoose.set("strictQuery", true);
 mongoose
   .connect(DB)
   .then(() => {
@@ -126,6 +153,6 @@ mongoose
     console.log(e);
   });
 
-server.listen(port, "0.0.0.0", () => {
+server.listen(port, "192.168.31.56", () => {
   console.log(`Server started and running on port ${port}`);
 });

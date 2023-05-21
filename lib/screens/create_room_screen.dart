@@ -5,6 +5,8 @@ import 'package:mp_tictactoe/widgets/custom_button.dart';
 import 'package:mp_tictactoe/widgets/custom_text.dart';
 import 'package:mp_tictactoe/widgets/custom_textfield.dart';
 
+import '../utils/colors.dart';
+
 class CreateRoomScreen extends StatefulWidget {
   static String routeName = '/create-room';
   const CreateRoomScreen({Key? key}) : super(key: key);
@@ -34,6 +36,13 @@ class _CreateRoomScreenState extends State<CreateRoomScreen> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
+      appBar: AppBar(
+        leading: const BackButton(
+          color: gradient3,
+        ),
+        backgroundColor: backgroundColor,
+        elevation: 0,
+      ),
       body: Responsive(
         child: Container(
           margin: const EdgeInsets.symmetric(
@@ -47,7 +56,7 @@ class _CreateRoomScreenState extends State<CreateRoomScreen> {
                 shadows: [
                   Shadow(
                     blurRadius: 40,
-                    color: Colors.blue,
+                    color: gradient2,
                   ),
                 ],
                 text: 'Create Room',

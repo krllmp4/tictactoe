@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../utils/colors.dart';
+
 class CustomButton extends StatelessWidget {
   final VoidCallback onTap;
 
@@ -12,30 +14,32 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-
+    final size = MediaQuery.of(context).size.width;
     return Container(
-      decoration: const BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.blue,
-            blurRadius: 5,
-            spreadRadius: 0,
-          )
-        ],
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [
+            gradient1,
+            gradient2,
+            gradient3,
+          ],
+          begin: Alignment.bottomLeft,
+          end: Alignment.topRight,
+        ),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: ElevatedButton(
         onPressed: onTap,
+        style: ElevatedButton.styleFrom(
+          minimumSize: Size(size, 60),
+          backgroundColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+        ),
         child: Text(
           text,
           style: const TextStyle(
-            fontSize: 16,
-          ),
-        ),
-        style: ElevatedButton.styleFrom(
-          minimumSize: Size(
-            width,
-            50,
+            fontWeight: FontWeight.w600,
+            fontSize: 17,
           ),
         ),
       ),

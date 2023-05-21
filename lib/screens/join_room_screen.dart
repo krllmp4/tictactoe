@@ -5,6 +5,8 @@ import 'package:mp_tictactoe/widgets/custom_button.dart';
 import 'package:mp_tictactoe/widgets/custom_text.dart';
 import 'package:mp_tictactoe/widgets/custom_textfield.dart';
 
+import '../utils/colors.dart';
+
 class JoinRoomScreen extends StatefulWidget {
   static String routeName = '/join-room';
   const JoinRoomScreen({Key? key}) : super(key: key);
@@ -38,6 +40,11 @@ class _JoinRoomScreenState extends State<JoinRoomScreen> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
+      appBar: AppBar(
+        leading: const BackButton(color: gradient3),
+        backgroundColor: backgroundColor,
+        elevation: 0,
+      ),
       body: Responsive(
         child: Container(
           margin: const EdgeInsets.symmetric(
@@ -51,18 +58,18 @@ class _JoinRoomScreenState extends State<JoinRoomScreen> {
                 shadows: [
                   Shadow(
                     blurRadius: 40,
-                    color: Colors.blue,
+                    color: gradient2,
                   ),
                 ],
-                text: 'Join Room',
+                text: 'Join Room.',
                 fontSize: 70,
               ),
-              SizedBox(height: size.height * 0.08),
+              SizedBox(height: size.height * 0.06),
               CustomTextField(
                 controller: _nameController,
                 hintText: 'Enter your nickname',
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: size.height * 0.045),
               CustomTextField(
                 controller: _gameIdController,
                 hintText: 'Enter Game ID',

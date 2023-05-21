@@ -3,6 +3,8 @@ import 'package:mp_tictactoe/provider/room_data_provider.dart';
 import 'package:mp_tictactoe/resources/socket_methods.dart';
 import 'package:provider/provider.dart';
 
+import '../utils/colors.dart';
+
 class TicTacToeBoard extends StatefulWidget {
   const TicTacToeBoard({Key? key}) : super(key: key);
 
@@ -49,10 +51,10 @@ class _TicTacToeBoardState extends State<TicTacToeBoard> {
             return GestureDetector(
               onTap: () => tapped(index, roomDataProvider),
               child: Container(
+                margin: const EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.white24,
-                  ),
+                  borderRadius: BorderRadius.circular(16.0),
+                  color: borderColor,
                 ),
                 child: Center(
                   child: AnimatedSize(
@@ -68,8 +70,8 @@ class _TicTacToeBoardState extends State<TicTacToeBoard> {
                               blurRadius: 40,
                               color:
                                   roomDataProvider.displayElements[index] == 'O'
-                                      ? Colors.red
-                                      : Colors.blue,
+                                      ? gradient2
+                                      : startGradientBg,
                             ),
                           ]),
                     ),

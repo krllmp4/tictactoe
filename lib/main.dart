@@ -19,9 +19,9 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => RoomDataProvider(),
       child: MaterialApp(
-        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData.dark().copyWith(
-          scaffoldBackgroundColor: bgColor,
+          scaffoldBackgroundColor: backgroundColor,
         ),
         routes: {
           MainMenuScreen.routeName: (context) => const MainMenuScreen(),

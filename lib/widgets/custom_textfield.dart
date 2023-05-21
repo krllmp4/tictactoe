@@ -19,17 +19,25 @@ class CustomTextField extends StatelessWidget {
       decoration: const BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: Colors.blue,
-            blurRadius: 5,
-            spreadRadius: 2,
-          )
+            color: gradient2,
+            blurRadius: 25,
+            spreadRadius: -5.0,
+          ),
         ],
       ),
       child: TextField(
+        textAlign: TextAlign.center,
         readOnly: isReadOnly,
         controller: controller,
         decoration: InputDecoration(
-          fillColor: bgColor,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: const BorderSide(
+              width: 0,
+              style: BorderStyle.none,
+            ),
+          ),
+          fillColor: backgroundColor,
           filled: true,
           hintText: hintText,
         ),

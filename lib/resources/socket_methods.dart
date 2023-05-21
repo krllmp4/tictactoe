@@ -39,6 +39,12 @@ class SocketMethods {
     }
   }
 
+  void revengeRequest(String roomId) {
+    _socketClient.emit('revenge', {
+      'roomId': roomId,
+    });
+  }
+
   // LISTENERS
   void createRoomSuccessListener(BuildContext context) {
     _socketClient.on('createRoomSuccess', (room) {
@@ -106,10 +112,21 @@ class SocketMethods {
     });
   }
 
+  void revengeListener(BuildContext context) {
+    _socketClient.on('revenged', (data) {
+      var roomDataProvider =
+          Provider.of<RoomDataProvider>(context, listen: false);
+      roomDataProvider.updateRoomData(data);
+            
+    });
+  }
+
   void endGameListener(BuildContext context) {
     _socketClient.on('endGame', (playerData) {
       showGameDialog(context, '${playerData['nickname']} won the game!');
-      Navigator.popUntil(context, (route) => false);
+      Future.delayed(const Duration(seconds: 2)).then((_) {
+        Navigator.popUntil(context, ModalRoute.withName('/main-menu'));
+      });
     });
   }
 }

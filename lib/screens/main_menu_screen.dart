@@ -3,6 +3,9 @@ import 'package:mp_tictactoe/responsive/responsive.dart';
 import 'package:mp_tictactoe/screens/create_room_screen.dart';
 import 'package:mp_tictactoe/screens/join_room_screen.dart';
 import 'package:mp_tictactoe/widgets/custom_button.dart';
+import 'package:mp_tictactoe/widgets/custom_text.dart';
+
+import '../utils/colors.dart';
 
 class MainMenuScreen extends StatelessWidget {
   static String routeName = '/main-menu';
@@ -22,7 +25,16 @@ class MainMenuScreen extends StatelessWidget {
       body: Responsive(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            CustomText(
+              shadows: [
+                Shadow(blurRadius: 40, color: gradient2),
+              ],
+              text: 'Play game.',
+              fontSize: 50,
+            ),
+            const SizedBox(height: 40,),
             CustomButton(
               onTap: () => createRoom(context),
               text: 'Create Room',
