@@ -46,44 +46,39 @@ class _JoinRoomScreenState extends State<JoinRoomScreen> {
         elevation: 0,
       ),
       body: Responsive(
-        child: Container(
-          margin: const EdgeInsets.symmetric(
-            horizontal: 20,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const CustomText(
-                shadows: [
-                  Shadow(
-                    blurRadius: 40,
-                    color: gradient2,
-                  ),
-                ],
-                text: 'Join Room.',
-                fontSize: 70,
-              ),
-              SizedBox(height: size.height * 0.06),
-              CustomTextField(
-                controller: _nameController,
-                hintText: 'Enter your nickname',
-              ),
-              SizedBox(height: size.height * 0.045),
-              CustomTextField(
-                controller: _gameIdController,
-                hintText: 'Enter Game ID',
-              ),
-              SizedBox(height: size.height * 0.045),
-              CustomButton(
-                onTap: () => _socketMethods.joinRoom(
-                  _nameController.text,
-                  _gameIdController.text,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const CustomText(
+              shadows: [
+                Shadow(
+                  blurRadius: 40,
+                  color: gradient2,
                 ),
-                text: 'Join',
+              ],
+              text: 'Join Room.',
+              fontSize: 70,
+            ),
+            SizedBox(height: size.height * 0.06),
+            CustomTextField(
+              controller: _nameController,
+              hintText: 'Enter your nickname',
+            ),
+            SizedBox(height: size.height * 0.045),
+            CustomTextField(
+              controller: _gameIdController,
+              hintText: 'Enter Game ID',
+            ),
+            SizedBox(height: size.height * 0.045),
+            CustomButton(
+              onTap: () => _socketMethods.joinRoom(
+                _nameController.text,
+                _gameIdController.text,
               ),
-            ],
-          ),
+              text: 'Join',
+            ),
+          ],
         ),
       ),
     );

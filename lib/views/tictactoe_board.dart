@@ -36,7 +36,7 @@ class _TicTacToeBoardState extends State<TicTacToeBoard> {
 
     return ConstrainedBox(
       constraints: BoxConstraints(
-        maxHeight: size.height * 0.7,
+        maxHeight: size.height * 0.65,
         maxWidth: 500,
       ),
       child: AbsorbPointer(
@@ -53,7 +53,7 @@ class _TicTacToeBoardState extends State<TicTacToeBoard> {
               child: Container(
                 margin: const EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16.0),
+                  borderRadius: BorderRadius.circular(20.0),
                   color: borderColor,
                 ),
                 child: Center(
@@ -67,11 +67,11 @@ class _TicTacToeBoardState extends State<TicTacToeBoard> {
                           fontSize: 100,
                           shadows: [
                             Shadow(
-                              blurRadius: 40,
+                              blurRadius: 20,
                               color:
                                   roomDataProvider.displayElements[index] == 'O'
                                       ? gradient2
-                                      : startGradientBg,
+                                      : Colors.blue,
                             ),
                           ]),
                     ),

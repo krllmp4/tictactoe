@@ -27,7 +27,7 @@ class MainMenuScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            CustomText(
+            const CustomText(
               shadows: [
                 Shadow(blurRadius: 40, color: gradient2),
               ],

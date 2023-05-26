@@ -44,37 +44,32 @@ class _CreateRoomScreenState extends State<CreateRoomScreen> {
         elevation: 0,
       ),
       body: Responsive(
-        child: Container(
-          margin: const EdgeInsets.symmetric(
-            horizontal: 20,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const CustomText(
-                shadows: [
-                  Shadow(
-                    blurRadius: 40,
-                    color: gradient2,
-                  ),
-                ],
-                text: 'Create Room',
-                fontSize: 70,
-              ),
-              SizedBox(height: size.height * 0.08),
-              CustomTextField(
-                controller: _nameController,
-                hintText: 'Enter your nickname',
-              ),
-              SizedBox(height: size.height * 0.045),
-              CustomButton(
-                  onTap: () => _socketMethods.createRoom(
-                        _nameController.text,
-                      ),
-                  text: 'Create'),
-            ],
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const CustomText(
+              shadows: [
+                Shadow(
+                  blurRadius: 40,
+                  color: gradient2,
+                ),
+              ],
+              text: 'Create Room',
+              fontSize: 70,
+            ),
+            SizedBox(height: size.height * 0.08),
+            CustomTextField(
+              controller: _nameController,
+              hintText: 'Enter your nickname',
+            ),
+            SizedBox(height: size.height * 0.045),
+            CustomButton(
+                onTap: () => _socketMethods.createRoom(
+                      _nameController.text,
+                    ),
+                text: 'Create'),
+          ],
         ),
       ),
     );

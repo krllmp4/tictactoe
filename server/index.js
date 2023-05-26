@@ -16,10 +16,9 @@ const DB = "mongodb+srv://krll:kir010404@krllcluster.knfsx5v.mongodb.net/?retryW
 
 io.on("connection", (socket) => {
   console.log("connected!");
-
   socket.on("createRoom", async ({ nickname }) => {
-    console.log(nickname);
     try {
+      console.log('nickname is '+nickname);
       // Создание комнаты
       let room = new Room();
       let player = {
@@ -75,6 +74,8 @@ io.on("connection", (socket) => {
   socket.on("tap", async ({ index, roomId }) => {
     try {
       let room = await Room.findById(roomId);
+      
+      console.log('tapped');
 
       let choice = room.turn.playerType; // X or O
       if (room.turnIndex == 0) {
@@ -106,7 +107,6 @@ io.on("connection", (socket) => {
       );
       player.points += 1;
       room = await room.save();
-
       if (player.points >= room.maxRounds) {
         io.to(roomId).emit("endGame", player);
       } else {
@@ -122,6 +122,7 @@ io.on("connection", (socket) => {
       console.log('revenge');
       let room = await Room.findById(roomId);
       room.isJoin = true;
+      room.currentRound = 1;
       room.players.forEach((player) => {
         player.points = 0;
       });
@@ -133,10 +134,14 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("surrender", async ({ roomId }) => {
+  socket.on("exitGame", async ({ roomId }) => {
     try {
+      console.log('exit');
       let room = await Room.findById(roomId);
-      io.to(roomId).emit("gameSurrendered", room);
+      Room.deleteOne
+      await Room.deleteOne({ _id: roomId });
+      console.log(room);
+      io.to(roomId).emit("gameExited", room);
     } catch (e) {
       console.log(e);
     }
@@ -153,6 +158,6 @@ mongoose
     console.log(e);
   });
 
-server.listen(port, "192.168.31.56", () => {
+server.listen(port, () => {
   console.log(`Server started and running on port ${port}`);
 });

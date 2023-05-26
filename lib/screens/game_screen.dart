@@ -1,11 +1,15 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:mp_tictactoe/provider/room_data_provider.dart';
+import 'package:mp_tictactoe/resources/game_methods.dart';
 import 'package:mp_tictactoe/resources/socket_methods.dart';
 import 'package:mp_tictactoe/views/scoreboard.dart';
 import 'package:mp_tictactoe/views/tictactoe_board.dart';
 import 'package:mp_tictactoe/views/waiting_lobby.dart';
 import 'package:provider/provider.dart';
 
+import '../resources/game_methods.dart';
 import '../utils/colors.dart';
 
 class GameScreen extends StatefulWidget {
@@ -26,22 +30,31 @@ class _GameScreenState extends State<GameScreen> {
     _socketMethods.updatePlayersStateListener(context);
     _socketMethods.pointIncreaseListener(context);
     _socketMethods.endGameListener(context);
+    _socketMethods.revengeListener(context);
+    _socketMethods.pointsClearListener1(context);
+    _socketMethods.pointsClearListener2(context);
   }
 
   @override
   Widget build(BuildContext context) {
     RoomDataProvider roomDataProvider = Provider.of<RoomDataProvider>(context);
+    //final SocketMethods socketMethods = SocketMethods();
 
     return Scaffold(
       appBar: AppBar(
-        leading: const BackButton(
-          //onPressed: , вернуться в главное меню и сообщить на сервер о выходе типа
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            _socketMethods.exitGame(roomDataProvider.roomData['_id']);
+            Navigator.popUntil(context, ModalRoute.withName('/main-menu'));
+          },
           color: gradient3,
         ),
         actions: [
           IconButton(
               onPressed: () {
-                //вызываем сокет метод на переигровку типа
+                _socketMethods.revengeRequest(roomDataProvider.roomData['_id']);
+                GameMethods().clearBoard(context);
               },
               icon: const Icon(Icons.restart_alt_rounded)),
         ],

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mp_tictactoe/resources/game_methods.dart';
+import 'package:mp_tictactoe/screens/surrender_screen.dart';
 
 import '../resources/socket_methods.dart';
 
@@ -12,9 +13,8 @@ void showSnackBar(BuildContext context, String content) {
   );
 }
 
-void showGameDialog(BuildContext context, String text) {
-  final SocketMethods _socketMethods = SocketMethods();
-  showDialog(
+Future<void> showGameDialog(BuildContext context, String text) async {
+  await showDialog(
       barrierDismissible: false,
       context: context,
       builder: (context) {
@@ -32,9 +32,8 @@ void showGameDialog(BuildContext context, String text) {
             ),
             TextButton(
               onPressed: () {
-                _socketMethods.revengeListener(context);
-                GameMethods().clearBoard(context);
-                Navigator.pop(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SurrenderScreen()));
               },
               child: const Text('Surrender'),
             )
